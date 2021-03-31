@@ -10,22 +10,22 @@ pragma solidity >=0.4.21 <0.7.0;
 contract SimpleLunarDeed {
   address public lawyer;
   address payable public beneficiary;
-  uint public dateToTransfer;
+  uint public transferDate;
 
   constructor(
     address _lawyer,
     address payable _beneficiary,
-    uint duration
+    uint dateToTransfer
   ) payable public
   {
     lawyer = _lawyer;
     beneficiary = _beneficiary;
-    dateToTransfer = now + duration;
+    transferDate = now + dateToTransfer;
   }
 
   function transferDeed() public {
     require(msg.sender == lawyer, 'Not the right Arbitror');
-    require(now >= dateToTransfer, 'Too early for the Land Value Transfer');
+    require(now >= transferDate, 'Too early for the Land Value Transfer');
     beneficiary.transfer(address(this).balance);
   }
 
